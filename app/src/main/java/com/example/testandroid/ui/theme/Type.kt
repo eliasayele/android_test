@@ -2,17 +2,38 @@ package com.example.testandroid.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.testandroid.R
 
 // Set of Material typography styles to start with
+val Gilroy = FontFamily(
+    Font(R.font.gilroy_bold, weight = FontWeight.Bold),
+    Font(R.font.gilroy_regular, weight = FontWeight.Bold),
+    Font(R.font.gilroy_light, weight = FontWeight.Light),
+    Font(R.font.gilroy_extrabold, weight = FontWeight.ExtraBold),
+)
 val Typography = Typography(
     body1 = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
+        fontFamily = Gilroy,
+        fontWeight = FontWeight.Bold,
         fontSize = 16.sp
-    )
+    ),
+    subtitle1 =  TextStyle(
+        fontFamily = Gilroy,
+        fontWeight = FontWeight.Light,
+        fontSize = 15.sp
+    ),
+    h1 = TextStyle(
+        fontFamily = Gilroy,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 35.sp
+    ),
+
+
+
     /* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,
@@ -26,3 +47,10 @@ val Typography = Typography(
     )
     */
 )
+
+//@OptIn(ExperimentalTextApi::class)
+//val provider = GoogleFont.Provider(
+//    providerAuthority = "com.google.android.gms.fonts",
+//    providerPackage = "com.google.android.gms",
+//    certificates = R.array.com_google_android_gms_fonts_certs
+//)
