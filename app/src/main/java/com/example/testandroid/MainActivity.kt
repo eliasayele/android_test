@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -27,12 +28,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -41,6 +40,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.testandroid.models.BottomNavItem
+import com.example.testandroid.ui.SelectableChip
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.N)
@@ -195,6 +195,13 @@ fun HomeScreen() {
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
+            Row(modifier = Modifier.padding(8.dp)) {
+                SelectableChip("All Members","",true) {}
+                SelectableChip("For women","",false) {}
+                SelectableChip("For men","",false) {}
+                SelectableChip("Health & Wellness","",false) {}
+                SelectableChip("Happy","",false) {}
+            }
             DisplayList(items = listItems)
         }
 
