@@ -45,13 +45,13 @@ fun TrackItem(item: Tracks) {
                     .clip(CircleShape)                       // clip to the circle shape
                     .border(1.dp, Color.Gray, CircleShape)   // add a border (optional)
             )
-            Column(modifier = Modifier.align(Alignment.CenterVertically).width(200.dp)) {
+            Column(modifier = Modifier.align(Alignment.CenterVertically).width(220.dp)) {
                 Text(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     text = item.name,
                     color = Color(0xFF1D2339),
                     style = MaterialTheme.typography.body1,
-                    fontSize = 16.sp,
+                    fontSize = 15.sp,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -61,7 +61,7 @@ fun TrackItem(item: Tracks) {
                     color = Color.Gray,
                     style = MaterialTheme.typography.subtitle1,
                     fontWeight = FontWeight.Light,
-                    fontSize = 13.sp,
+                    fontSize = 12.sp,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )

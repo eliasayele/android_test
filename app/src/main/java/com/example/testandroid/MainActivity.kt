@@ -159,7 +159,7 @@ fun BottomBarNavigation(
                 onClick = { onItemClick(item) },
                 selectedContentColor = Color(0xFF6ABED0),
                 unselectedContentColor = Color.Black,
-                label = {Text(item.name, fontSize = 12.sp, style = MaterialTheme.typography.subtitle1, fontWeight = FontWeight.Medium)}
+                label = {Text(item.name, fontSize = 11.sp, style = MaterialTheme.typography.subtitle1, fontWeight = FontWeight.Medium)}
             )
         }
 
@@ -192,7 +192,7 @@ fun DisplayList(items: List<Tracks>) {
     LazyColumn(modifier = Modifier
         .fillMaxSize(1F)
         .padding(horizontal = 20.dp, vertical = 10.dp)
-        .padding(bottom = 60.dp),
+        .padding(bottom = 47.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         state = listState)
     {
