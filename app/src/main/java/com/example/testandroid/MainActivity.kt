@@ -6,14 +6,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -28,9 +27,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.ui.Alignment.Companion.BottomEnd
+import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Alignment.Companion.End
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -41,6 +47,17 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.testandroid.models.BottomNavItem
 import com.example.testandroid.ui.SelectableChip
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.ui.text.style.TextAlign
+import androidx.core.view.WindowCompat
+import com.example.testandroid.models.Tracks
+import com.example.testandroid.ui.components.TrackItem
+import com.example.testandroid.ui.screens.FavouritesScreen
+import com.example.testandroid.ui.screens.HomeScreen
+import com.example.testandroid.ui.screens.JournalScreen
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.N)
@@ -52,6 +69,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+
 @RequiresApi(Build.VERSION_CODES.N)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -60,47 +79,73 @@ private fun MainScreen() {
         val navController = rememberNavController()
         val configuration = LocalConfiguration.current
         val screenWidth = configuration.screenWidthDp
-        Scaffold(
-            topBar = {
-                Row(modifier = Modifier.padding(10.dp)) {
-                    Icon(Icons.Outlined.Info, contentDescription = "information",modifier = Modifier.weight(1f, true))
+        val systemUiController = rememberSystemUiController()
+        systemUiController.setSystemBarsColor(color = Color.White)
+
+        Box {
+            /** background path */
+            Column {
+                Image(painter  = painterResource(R.drawable.firstshape), contentDescription ="" )
+                Row(){
                     Spacer(modifier = Modifier.weight(7f, true))
-                    Icon(Icons.Filled.Search, "Search",modifier = Modifier.weight(1f, true))
+                    Image(painter  = painterResource(R.drawable.secondshape),
+                        contentDescription ="",
+                        alignment = BottomEnd
+                    )
                 }
-            },
-            bottomBar = {
-                BottomBarNavigation(
-                navController = navController,
-                items = listOf(
-                    BottomNavItem(
-                        name = "Subliminals",
-                        route = "subliminals",
-                        icon = R.drawable.ic_headphones,
-                    ),
-                    BottomNavItem(
-                        name = "Favourites",
-                        route = "favourites",
-                        icon = R.drawable.ic_hearticon,
-                    ),
-                    BottomNavItem(
-                        name = "Journals",
-                        route = "journals",
-                        icon = R.drawable.ic_journalicon,
-                    ),
-                ),
-             onItemClick ={
-                 navController.navigate(it.route)
-             }
-            ) }
-        ) {
-            Navigation(navController = navController)
+
+
+            }
+            Scaffold(
+                backgroundColor = Color.Transparent,
+                topBar = {
+                    Row(modifier = Modifier.padding(10.dp)) {
+                        Icon(Icons.Default.Info,
+                            contentDescription = "information",
+                            modifier = Modifier.weight(1f, true)
+                        )
+                        Spacer(modifier = Modifier.weight(7f, true))
+                        Icon(Icons.Outlined.Search, "Search",
+                            modifier = Modifier
+                                .weight(1f, true)
+                                .background(Color(0xFFF6F9FA)))
+                    }
+                },
+                bottomBar = {
+                    BottomBarNavigation(
+                        items = listOf(
+                            BottomNavItem(
+                                name = "Subliminals",
+                                route = "subliminals",
+                                icon = R.drawable.ic_headphones,
+                            ),
+                            BottomNavItem(
+                                name = "Favourites",
+                                route = "favourites",
+                                icon = R.drawable.ic_hearticon,
+                            ),
+                            BottomNavItem(
+                                name = "Journals",
+                                route = "journals",
+                                icon = R.drawable.ic_journalicon,
+                            ),
+                        ),
+                        navController = navController,
+                        onItemClick = {
+                            navController.navigate(it.route)
+                        }
+                    ) }
+            ) {
+                Navigation(navController = navController)
+            }
         }
+
     }
 }
 
 @Composable
 fun BottomBarNavigation(
-    items:List<BottomNavItem>,
+    items: List<BottomNavItem>,
     navController: NavController,
     modifier: Modifier = Modifier,
     onItemClick: (BottomNavItem) -> Unit
@@ -118,13 +163,11 @@ fun BottomBarNavigation(
                             painter = painterResource(item.icon),
                             contentDescription = item.name
                         )
-                        //Text(text = item.name)
                     }
-                   
                 },
                 selected = selected,
                 onClick = {
-                          onItemClick
+                          onItemClick(item)
                 },
                selectedContentColor = Color(0xFF6ABED0),
                 unselectedContentColor = Color.Black,
@@ -138,157 +181,36 @@ fun BottomBarNavigation(
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun Navigation(navController: NavHostController) {
-    //startDestination = "subliminals"
     NavHost(navController = navController, startDestination = "subliminals") {
         composable("subliminals") {
             HomeScreen()
         }
-        //favourites
         composable("favourites") {
-           ChatScreen()
+            FavouritesScreen()
         }
-        //journals
         composable("journals") {
-           SettingsScreen()
+           JournalScreen()
         }
     }
 }
-@OptIn(ExperimentalFoundationApi::class)
-@RequiresApi(Build.VERSION_CODES.N)
-@Composable
-fun HomeScreen() {
-    val listItems: List<ListItem> = listOf(
-        ListItem("Female Super Model Subliminal", image = R.drawable.model_pic1, description ="Become physically attractive" ),
-        ListItem("Greek God Physique Subliminal v3.1",image = R.drawable.model_pic2, description = "Fitness & wellness"),
-        ListItem("The most amazing subliminal for you",image = R.drawable.model_pic3, description = "Design your future"),
-        ListItem("Strongest Subliminal Booster v3.1",image = R.drawable.model_pic4, description = "Get faster results"),
-        ListItem("Female Super Model Subliminal",image = R.drawable.model_pic1, description = "Become physically attractive"),
-        ListItem("Greek God Physique Subliminal v3.1",image = R.drawable.model_pic2,description="Fitness & wellness"),
-        ListItem("The most amazing subliminal for you",image = R.drawable.model_pic3, description = "Get faster results"),
-        ListItem("Strongest Subliminal Booster v3.1",image = R.drawable.model_pic4, description = "Design your future"),
-        ListItem("Female Super Model Subliminal",image = R.drawable.model_pic1, description = "Become physically attractive"),
-        ListItem("Greek God Physique Subliminal v3.1",image = R.drawable.model_pic2,description="Fitness & wellness"),
-        ListItem("The most amazing subliminal for you",image = R.drawable.model_pic3, description = "Get faster results"),
-        ListItem("Female Super Model Subliminal",image = R.drawable.model_pic4, description = "Design your future")
-    )
-    Box(modifier = Modifier.fillMaxHeight()) {
-        Column() {
-            Text(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp),
-                text = "Good morning!",
-                color = Color.Black,
-                fontSize = 30.sp,
-                style = MaterialTheme.typography.h1,
-                fontWeight = FontWeight.Bold,
-                //fontFamily = FontFamily.Gilroy,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp),
-                text = "Your daily dose of subliminals is ready",
-                color = Color(0xFF415871),
-                style = MaterialTheme.typography.body1,
-                fontSize = 14.sp,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Row(modifier = Modifier.padding(8.dp)) {
-                SelectableChip("All Members","",true) {}
-                SelectableChip("For women","",false) {}
-                SelectableChip("For men","",false) {}
-                SelectableChip("Health & Wellness","",false) {}
-                SelectableChip("Happy","",false) {}
-            }
-            DisplayList(items = listItems)
-        }
 
-    }
-}
-
-@Composable
-fun ChatScreen() {
-    Box {
-        Text(text = "Chat Screen")
-    }
-}
-
-@Composable
-fun SettingsScreen() {
-    Box {
-        Text(text = "Settings Screen")
-    }
-}
-data class ListItem(val name: String,val image: Int,val description: String)
 
 @RequiresApi(Build.VERSION_CODES.N)
 @ExperimentalFoundationApi
 @Composable
-fun DisplayList(items: List<ListItem>) {
+fun DisplayList(items: List<Tracks>) {
     val listState = rememberLazyListState()
 
-    LazyColumn(modifier = Modifier.fillMaxSize(1F), state = listState) {
+    LazyColumn(modifier = Modifier
+        .fillMaxSize(1F)
+        .padding(horizontal = 20.dp, vertical = 10.dp)
+        .padding(bottom = 60.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        state = listState)
+    {
         items(items) { item  ->
-            ListItem(item = item)
-
+            TrackItem(item = item)
         }
-//        CoroutineScope(Dispatchers.IO).launch {
-//            listState.scrollToItem(items.size-1)
-//        }
     }
 }
 
-@Composable
-fun ListItem(item: ListItem) {
-    Box(
-
-    ) {
-        Card(shape = RoundedCornerShape(10.dp), modifier = Modifier
-            .fillMaxWidth()
-            .padding(4.dp)
-            .height(120.dp)
-            .background(color = Color.White)) {
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .fillMaxWidth()
-            ) {
-                Image(
-                    painter = painterResource(id = item.image),
-                    contentDescription = "user icon",
-                    modifier = Modifier
-                        .height(100.dp)
-                        .width(100.dp)
-                        .padding(horizontal = 8.dp)
-                        .align(CenterVertically)
-
-                )
-                Column(modifier = Modifier.align(CenterVertically)) {
-                    Text(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        text = item.name,
-                        color = Color(0xFF1D2339),
-                        style = MaterialTheme.typography.body1,
-                        fontSize = 18.sp,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        text = item.description,
-                        color = Color.Gray,
-                        style = MaterialTheme.typography.subtitle1,
-                        fontWeight = FontWeight.Light,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-
-            }
-        }
-
-
-    }
-}

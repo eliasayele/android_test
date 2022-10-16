@@ -1,4 +1,6 @@
 package com.example.testandroid.models
 
-class Tracks {
-}
+
+
+
+data class Tracks(val name: String,val image: Int,val description: String)

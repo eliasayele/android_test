@@ -24,7 +24,7 @@ val Typography = Typography(
     subtitle1 =  TextStyle(
         fontFamily = Gilroy,
         fontWeight = FontWeight.Light,
-        fontSize = 15.sp
+        fontSize = 14.sp
     ),
     h1 = TextStyle(
         fontFamily = Gilroy,
