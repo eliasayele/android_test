@@ -3,6 +3,7 @@ package com.example.testandroid
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -63,7 +64,10 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         setContent {
             MainScreen()
         }
@@ -82,33 +86,37 @@ private fun MainScreen() {
         val systemUiController = rememberSystemUiController()
         systemUiController.setSystemBarsColor(color = Color.White)
 
-        Box {
+        Box(modifier = Modifier.padding(top = 7.dp)) {
             /** background path */
             Column {
                 Image(painter  = painterResource(R.drawable.firstshape), contentDescription ="" )
-                Row(){
+                Spacer(modifier = Modifier.weight(3f))
+                Row {
                     Spacer(modifier = Modifier.weight(7f, true))
                     Image(painter  = painterResource(R.drawable.secondshape),
                         contentDescription ="",
-                        alignment = BottomEnd
+                        alignment = BottomEnd,
+                        //modifier = Modifier.weight(40f)
                     )
                 }
-
-
+                Spacer(modifier = Modifier.weight(4f))
             }
             Scaffold(
                 backgroundColor = Color.Transparent,
                 topBar = {
-                    Row(modifier = Modifier.padding(10.dp)) {
-                        Icon(Icons.Default.Info,
-                            contentDescription = "information",
-                            modifier = Modifier.weight(1f, true)
+                    Row(modifier = Modifier.padding(10.dp).padding(top = 22.dp)) {
+
+                        Image(painter  = painterResource(R.drawable.infobutton),
+                            contentDescription ="",
+                            alignment = BottomEnd, modifier = Modifier.padding(start = 10.dp)
                         )
                         Spacer(modifier = Modifier.weight(7f, true))
-                        Icon(Icons.Outlined.Search, "Search",
-                            modifier = Modifier
-                                .weight(1f, true)
-                                .background(Color(0xFFF6F9FA)))
+
+                        Image(painter  = painterResource(R.drawable.searchbutton),
+                            contentDescription ="",
+                            alignment = BottomEnd,
+                            modifier = Modifier.padding(end = 10.dp)
+                        )
                     }
                 },
                 bottomBar = {
@@ -166,12 +174,10 @@ fun BottomBarNavigation(
                     }
                 },
                 selected = selected,
-                onClick = {
-                          onItemClick(item)
-                },
-               selectedContentColor = Color(0xFF6ABED0),
+                onClick = { onItemClick(item) },
+                selectedContentColor = Color(0xFF6ABED0),
                 unselectedContentColor = Color.Black,
-                 label = {Text(item.name)}
+                label = {Text(item.name, fontSize = 12.sp, style = MaterialTheme.typography.subtitle1, fontWeight = FontWeight.Medium)}
             )
         }
 

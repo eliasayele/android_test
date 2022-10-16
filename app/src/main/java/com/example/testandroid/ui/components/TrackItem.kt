@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -26,8 +27,8 @@ fun TrackItem(item: Tracks) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(110.dp)
-            .clip(RoundedCornerShape(20.dp))
+            .height(115.dp)
+            .clip(RoundedCornerShape(26.dp))
             .background(Color.White)
             .padding(horizontal = 15.dp, vertical = 5.dp)
     ){
@@ -44,22 +45,23 @@ fun TrackItem(item: Tracks) {
                     .clip(CircleShape)                       // clip to the circle shape
                     .border(1.dp, Color.Gray, CircleShape)   // add a border (optional)
             )
-            Column(modifier = Modifier.align(Alignment.CenterVertically)) {
+            Column(modifier = Modifier.align(Alignment.CenterVertically).width(200.dp)) {
                 Text(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     text = item.name,
                     color = Color(0xFF1D2339),
                     style = MaterialTheme.typography.body1,
-                    fontSize = 18.sp,
+                    fontSize = 16.sp,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    modifier = Modifier.padding(horizontal = 16.dp),
+                    modifier = Modifier.padding(horizontal = 16.dp).padding(top = 5.dp),
                     text = item.description,
                     color = Color.Gray,
                     style = MaterialTheme.typography.subtitle1,
                     fontWeight = FontWeight.Light,
+                    fontSize = 13.sp,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )

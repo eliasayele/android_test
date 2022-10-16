@@ -12,18 +12,19 @@ import com.example.testandroid.R
 val Gilroy = FontFamily(
     Font(R.font.gilroy_bold, weight = FontWeight.Bold),
     Font(R.font.gilroy_regular, weight = FontWeight.Bold),
+    Font(R.font.gilroy_medium, weight = FontWeight.Medium),
     Font(R.font.gilroy_light, weight = FontWeight.Light),
     Font(R.font.gilroy_extrabold, weight = FontWeight.ExtraBold),
 )
 val Typography = Typography(
     body1 = TextStyle(
         fontFamily = Gilroy,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.W600,
         fontSize = 16.sp
     ),
     subtitle1 =  TextStyle(
         fontFamily = Gilroy,
-        fontWeight = FontWeight.Light,
+        fontWeight = FontWeight.Medium,
         fontSize = 14.sp
     ),
     h1 = TextStyle(
@@ -31,6 +32,7 @@ val Typography = Typography(
         fontWeight = FontWeight.ExtraBold,
         fontSize = 35.sp
     ),
+
 
 
 
