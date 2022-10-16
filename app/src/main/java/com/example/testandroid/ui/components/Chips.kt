@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.testandroid.models.Tracks
 
 
@@ -43,10 +44,11 @@ fun CategoryChip(
                     onSelectedCategoryChanged(category)
                 }
             )
+            .padding(horizontal = 10.dp, vertical = 2.dp)
         ) {
             Text(
                 text = category,
-                style = MaterialTheme.typography.button.copy(color = if (isSelected) Color.White else if(initial) Color.White else Color(0xFF8A8E9A)),
+                style = MaterialTheme.typography.subtitle1.copy(color = if (isSelected) Color.White else if(initial) Color.White else Color(0xFF8A8E9A), fontSize = 12.sp),
                 modifier = Modifier.padding(8.dp)
             )
         }
